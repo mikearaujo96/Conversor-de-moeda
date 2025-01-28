@@ -1,42 +1,24 @@
-/*
-
-[✅] Mapear Botão conversor, atribuir evento de click
-
-[✅] Mapear input e capturar o valor digitado 
-
-[✅] Criar função que converte valores  
-
-[✅] Mapear Select
-
-[✅] Atribuir resultados diferentes para select selecionado
-
-[✅] Imprimir o resultado na tela
-
-
-    
-*/
-
-
 const convertButton = document.querySelector(".convert-button");
 const currencySelect = document.querySelector(".currency-select");
-
-
-
-
-
 
 convertButton.addEventListener("click", convertValues);
 currencySelect.addEventListener("change", changeCurrency);
 
 
-function convertValues() {
+async function convertValues() {
     const inputCurrency = document.querySelector(".input-currency").value;
     const inputCurrencyValue = inputCurrency.value
     const currencyValueToConvert = document.querySelector(".currency-value-to-convert"); // Valor em Real
     const currencyValueConverted = document.querySelector(".currency-value"); // Outras moedas
 
-    const dolarToday = 5.2;
-    const euroToday = 6.2;
+
+    const data = await fetch("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL").then((response) => {
+        return response.json()
+    });
+
+    const dolarToday = data.USDBRL.high;
+    const euroToday = data.EURBRL.high;
+
 
     if (currencySelect.value == "dolar") {
         currencyValueConverted.innerHTML = new Intl.NumberFormat("en-US", {
